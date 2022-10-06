@@ -16,11 +16,11 @@ async function getFiles(p) {
 }
 
 // promises com then()
-// function getFiles(p) {
-//     fs.promises
-//         .readFile(p, 'utf-8')
-//         .then((content => console.log(chalk.green(content))))
-//         .catch(getError)
-// }
+function getFiles(p) {
+    fs.promises
+        .readFile(p, 'utf-8')
+        .then((content => console.log(chalk.green(content))))
+        .catch(getError)
+}
 
 getFiles('./arquivos/texto.md')
