@@ -1,6 +1,12 @@
 import fs from 'fs';
 import chalk from 'chalk';
 
+function getLinks(l) {
+    const regex = /\[([^[\]]*?)\]\((https?:\/\/[^\s?#.].[^\s]*)\)/gm;
+    const regexText = [...l.matchAll(regex)];
+    return regexText.map(text => ({[text[1]]: text[2]}));
+}
+
 function getError(e) {
     throw new Error(chalk.red('Ocorreu um erro: ', e.code));
 }
@@ -9,18 +15,10 @@ function getError(e) {
 async function getFiles(p) {
     try {
         const content = await fs.promises.readFile(p, 'utf-8')
-        console.log(content);
+        console.log(getLinks(content));
     } catch (error) {
         getError(error)
     }
 }
 
-// promises com then()
-function getFiles(p) {
-    fs.promises
-        .readFile(p, 'utf-8')
-        .then((content => console.log(chalk.green(content))))
-        .catch(getError)
-}
-
-getFiles('./arquivos/texto.md')
+getFiles('./arquivos/texto.md');
